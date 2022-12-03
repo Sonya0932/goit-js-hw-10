@@ -32,10 +32,6 @@ function onSearch(evt) {
             Notiflix.Notify.info(
                 'Too many matches found. Please enter a more specific name.'
             );
-        } else if (foundData.length === 0) {
-            Notiflix.Notify.failure(
-                'Oops, there is no country with that name'
-            );
         } else if (foundData.length === 1) {
             clearMarking(countryList.innerHTML)
             oneCounrtyInSearch(foundData)
@@ -43,7 +39,13 @@ function onSearch(evt) {
             clearMarking(oneCounrtyInSearch.innerHTML)
             countryList(foundData);
         }
-    })
+    }).catch(error => {
+        Notiflix.Notify.failure(
+            'Oops, there is no country with that name'
+        );
+        clearMarking()
+        console.error(error);
+    });
 }
 
 function countryList(countries) {
